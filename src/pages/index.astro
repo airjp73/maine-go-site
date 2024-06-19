@@ -2,21 +2,29 @@
 import Layout from "../layouts/Layout.astro";
 import Prose from "../components/Prose.astro";
 import NarrowContainer from "../components/NarrowContainer.astro";
+import StickyHeader from "../components/StickyHeader.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-  <header
-    class="bg-[url('/maine-go-site/header.jpg')] h-96 bg-cover relative
+  <StickyHeader>
+    <nav class="flex items-center px-6 py-3 bg-white">
+      <a class="font-semibold text-2xl" href="/">Maine Go</a>
+      <a class="ml-auto">Clubs</a>
+    </nav>
+  </StickyHeader>
+
+  <main class="isolate">
+    <div
+      class="bg-[url('/maine-go-site/header.jpg')] h-96 bg-cover relative
 		before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/10 before:to-white"
-  >
-    <div class="h-[80%] flex items-center justify-center relative">
-      <div class="p-10 bg-white/90 rounded-lg">
-        <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">Maine Go</h1>
+    >
+      <div class="flex items-center justify-center relative pt-16">
+        <h1 class="text-5xl font-semibold px-6 py-3 bg-white/80 rounded-lg">
+          Welcome to Maine Go
+        </h1>
       </div>
     </div>
-  </header>
-  <main class="-mt-24 relative">
-    <NarrowContainer class="bg-white/70 rounded-lg p-10">
+    <NarrowContainer class="bg-white/70 rounded-lg p-10 relative -mt-36">
       <Prose>
         <h2>News and Information for Maine Go Players</h2>
 

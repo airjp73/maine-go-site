@@ -1,0 +1,23 @@
+---
+
+---
+
+<header
+  class="sticky top-0 z-10 border-b border-gray-400/50"
+  id="sticky-header"
+>
+  <slot />
+</header>
+
+<script>
+  const stickyHeader = document.getElementById("sticky-header");
+  if (!stickyHeader) throw new Error("Could not find sticky header");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 0) {
+      stickyHeader.classList.add("shadow-lg");
+    } else {
+      stickyHeader.classList.remove("shadow-lg");
+    }
+  });
+</script>
