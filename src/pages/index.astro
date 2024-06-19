@@ -3,13 +3,21 @@ import Layout from "../layouts/Layout.astro";
 import Prose from "../components/Prose.astro";
 import NarrowContainer from "../components/NarrowContainer.astro";
 import StickyHeader from "../components/StickyHeader.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Welcome to Astro.">
   <StickyHeader>
     <nav class="flex items-center px-6 py-3 bg-white">
       <a class="font-semibold text-2xl" href="/">Maine Go</a>
-      <a class="ml-auto">Clubs</a>
+      <div class="flex items-center ml-auto gap-2">
+        <a href="/clubs" class="px-4 py-1 hover:bg-gray-200/50 rounded-md"
+          >Clubs</a
+        >
+        <a href="/aga" class="px-4 py-1 hover:bg-gray-200/50 rounded-md"
+          >Contact</a
+        >
+      </div>
     </nav>
   </StickyHeader>
 
@@ -78,4 +86,6 @@ import StickyHeader from "../components/StickyHeader.astro";
       </Prose>
     </NarrowContainer>
   </main>
+
+  <Footer />
 </Layout>
