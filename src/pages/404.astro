@@ -1,0 +1,20 @@
+---
+import Goban from "../components/Goban.astro";
+import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404: Not found">
+  <Header />
+
+  <div class="fixed pointer-events-none inset-0 overflow-hidden">
+    <Goban
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 skew-x-4 opacity-20 -skew-x-12 skew-y-3"
+    />
+  </div>
+
+  <main class="isolate flex flex-col items-center justify-center mt-32 gap-4">
+    <h1 class="text-4xl font-semibold">404: Not found</h1>
+    <p class="text-lg">This page doesn't exist... yet.</p>
+  </main>
+</Layout>
