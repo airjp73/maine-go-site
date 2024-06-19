@@ -6,5 +6,5 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: "https://airjp73.github.io",
   base: "maine-go-site",
-  integrations: [tailwind()]
+  integrations: [tailwind()],
 });
