@@ -1,5 +1,6 @@
 ---
 layout: ../layouts/Layout.astro
+header-image: /header-image.webp
 title: Welcome to Maine Go
 description: The Maine Go Club
 ---

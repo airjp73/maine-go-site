@@ -17,6 +17,7 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 
 const title = Astro.props.frontmatter?.title || Astro.props.title || "Maine Go";
+const headerImage = Astro.props.frontmatter?.["header-image"];
 ---
 
 <!doctype html>
@@ -33,7 +34,14 @@ const title = Astro.props.frontmatter?.title || Astro.props.title || "Maine Go";
   <Header />
 
   <main class="isolate">
-    <div>
+    <div
+        style={{
+          backgroundImage: headerImage && "url('/maine-go-site/" + headerImage + "')"
+        }}
+        class:list={[
+          headerImage && "h-[500px] bg-right-bottom bg-cover flex items-center justify-center mb-8"
+        ]}
+        >
       <div class="flex items-center justify-center relative pt-17">
         <h1 class="text-5xl sm:text-5xl font-semibold px-2 sm:px-6 py-4 bg-white/80 rounded-lg text-center"
         >
