@@ -3,12 +3,23 @@ interface Props {
   /**
    * Frontmatter might not be present if the page isn't generated from a Markdown file.
    */
-  frontmatter?: Record<string, unknown>;
-  
+  frontmatter?: Omit<Props, "frontmatter">;
+
   /**
-   * Specify the title of non-Markdown pages.
+   * The title of the page. This just goes in the meta tag.
    */
   title?: string;
+
+  /**
+   * Use this to add a hero image to the page.
+   * The value of this should be the relative path to the image.
+   */
+  heroImage?: string;
+
+  /**
+   * Use this to add a header to the hero.
+   */
+  heroHeading?: string;
 }
 
 import Prose from "../components/Prose.astro";
@@ -16,12 +27,12 @@ import NarrowContainer from "../components/NarrowContainer.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 
-const title = Astro.props.frontmatter?.title || Astro.props.title || "Maine Go";
-const headerImage = Astro.props.frontmatter?.["header-image"];
+const { title, heroImage, heroHeading } =
+  Astro.props.frontmatter ?? Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Maine Go Club" />
@@ -29,35 +40,41 @@ const headerImage = Astro.props.frontmatter?.["header-image"];
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="h-full flex flex-col">
+    <Header />
 
-  <Header />
+    <main class="isolate grow">
+      {
+        heroImage && (
+          <div
+            style={{
+              backgroundImage:
+                heroImage && "url('/maine-go-site/" + heroImage + "')",
+            }}
+            class:list={[
+              heroImage &&
+                "h-[500px] bg-right-bottom bg-cover flex items-center justify-center mb-8",
+            ]}
+          >
+            {heroHeading && (
+              <div class="flex items-center justify-center relative pt-17">
+                <h1 class="text-5xl sm:text-5xl font-semibold px-2 sm:px-6 py-4 bg-white/80 rounded-lg text-center">
+                  {heroHeading}
+                </h1>
+              </div>
+            )}
+          </div>
+        )
+      }
+      <NarrowContainer
+        class="bg-white/69 rounded-lg p-10 pt-40 relative -mt-36 h-full"
+      >
+        <Prose>
+          <slot />
+        </Prose>
+      </NarrowContainer>
+    </main>
 
-  <main class="isolate">
-    <div
-        style={{
-          backgroundImage: headerImage && "url('/maine-go-site/" + headerImage + "')"
-        }}
-        class:list={[
-          headerImage && "h-[500px] bg-right-bottom bg-cover flex items-center justify-center mb-8"
-        ]}
-        >
-      <div class="flex items-center justify-center relative pt-17">
-        <h1 class="text-5xl sm:text-5xl font-semibold px-2 sm:px-6 py-4 bg-white/80 rounded-lg text-center"
-        >
-        {title}
-        </h1>
-      </div>
-    </div>
-    <NarrowContainer class="bg-white/69 rounded-lg p-10 pt-40 relative -mt-36">
-
-      <Prose>
-        <slot />
-      </Prose>
-
-    </NarrowContainer>
-  </main>
-
-  <Footer />
+    <Footer />
   </body>
 </html>
