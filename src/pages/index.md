@@ -32,6 +32,10 @@ the [Augusta Panera Bread](https://www.panerabread.com/content/panerabread_com/e
 Most of us have [OGS](https://online-go.com) accounts.
 Sometimes, particularly on Wednesdays, we'll convene to play games there, and use Discord for audio.
 
+## Events
+
+[We'll have our second Maine State Go Tournament on November 23rd, 2024.](/maine-go-site/2024tournament)
+
 ## AGA
 
 Maine Go is an [American Go Association (AGA)](https://www.usgo.org/) chapter.
