@@ -34,7 +34,7 @@ Sometimes, particularly on Wednesdays, we'll convene to play games there, and us
 
 ## Events
 
-[We'll have our second Maine State Go Tournament on November 23rd, 2024.](/maine-go-site/2024tournament)
+[We'll have our second Maine State Championship and Open on November 23rd, 2024.](/maine-go-site/2024tournament)
 
 ## AGA
 
