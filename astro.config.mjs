@@ -2,8 +2,10 @@ import { defineConfig } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://airjp73.github.io",
-  integrations: [tailwind()],
+  site: "https://www.mainego.org/",
+  integrations: [tailwind(), sitemap()],
 });
