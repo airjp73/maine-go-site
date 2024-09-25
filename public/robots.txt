@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mainego.com/sitemap-index.xml
+Sitemap: https://mainego.org/sitemap-index.xml
