@@ -45,13 +45,15 @@ If you are interested in joining the AGA, you can join through Maine Go and get 
 
 ## Contact
 
+import Input from "../components/Input.astro";
+
 <form method="post" action="/api/contact" encType="application/x-www-form-urlencoded">
 
 <label for="name">Name</label>
-<input type="text" name="name" id="name" />
+<Input type="text" name="name" id="name" />
 
 <label for="email">Email</label>
-<input type="email" name="email" id="email" />
+<Input type="email" name="email" id="email" />
 
 <label for="message">Message</label>
 <textarea name="message" id="message"></textarea>
