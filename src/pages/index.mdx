@@ -46,6 +46,7 @@ If you are interested in joining the AGA, you can join through Maine Go and get 
 ## Contact
 
 import Input from "../components/Input.astro";
+import Textarea from "../components/Textarea.astro";
 
 <form method="post" action="/api/contact" encType="application/x-www-form-urlencoded">
 
@@ -56,7 +57,7 @@ import Input from "../components/Input.astro";
 <Input type="email" name="email" id="email" />
 
 <label for="message">Message</label>
-<textarea name="message" id="message"></textarea>
+<Textarea name="message" id="message"></Textarea>
 
 <button type="submit">Submit</button>
 
