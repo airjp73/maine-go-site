@@ -47,18 +47,28 @@ If you are interested in joining the AGA, you can join through Maine Go and get 
 
 import Input from "../components/Input.astro";
 import Textarea from "../components/Textarea.astro";
+import Button from "../components/Button.astro";
+import Label from "../components/Label.astro";
 
-<form method="post" action="/api/contact" encType="application/x-www-form-urlencoded">
+<form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
 
-<label for="name">Name</label>
-<Input type="text" name="name" id="name" />
+<div>
+  <Label for="name">Name</Label>
+  <Input type="text" name="name" id="name" placeholder="testing 123" />
+</div>
 
-<label for="email">Email</label>
-<Input type="email" name="email" id="email" />
+<div>
+  <Label for="email">Email</Label>
+  <Input type="email" name="email" id="email" />
+</div>
 
-<label for="message">Message</label>
-<Textarea name="message" id="message"></Textarea>
+<div>
+  <Label for="message">Message</Label>
+  <Textarea name="message" id="message"></Textarea>
+</div>
 
-<button type="submit">Submit</button>
+<div class="flex justify-end">
+  <Button type="submit">Submit</Button>
+</div>
 
 </form>
