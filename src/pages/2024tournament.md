@@ -18,7 +18,7 @@ The top placing Maine resident will be the new Maine State Champion.
 Three rounds of games, AGA rules,
 20 minutes plus 20 seconds Fischer time.
 Initial pairings will be based on rank
-(using the [McMahon system](https://senseis.xmp.net/?McMahonPairing), possibly using handicaps).
+(using the [McMahon system](https://senseis.xmp.net/?McMahonPairing)).
 Players may move up or down in later rounds; everyone will get to play three games.
 Everyone will be asked to wear masks in the game room; we'll have some on hand.
 
