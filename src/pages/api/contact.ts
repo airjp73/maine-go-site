@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import * as postmark from "postmark";
+import { isHoneypotValid } from "../../lib/honeypot";
 
 export const prerender = false;
 
@@ -12,7 +13,11 @@ const dataSchema = zfd.formData({
 });
 
 export const POST: APIRoute = async ({ request, redirect }) => {
-  const data = dataSchema.parse(await request.formData());
+  const formData = await request.formData();
+  if (!isHoneypotValid(formData))
+    return new Response("Try again later", { status: 400 });
+
+  const data = dataSchema.parse(formData);
 
   const apiKey = import.meta.env.POSTMARK_API_KEY;
   const recipient = import.meta.env.CONTACT_FORM_RECIPIENT_EMAIL;

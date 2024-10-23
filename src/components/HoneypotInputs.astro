@@ -1,0 +1,40 @@
+---
+// Reworked for Astro based on this component from remix-utils:
+// https://github.com/sergiodxa/remix-utils/blob/main/src/react/honeypot.tsx
+
+import { honeypot } from "../lib/honeypot";
+
+const { nameFieldName, validFromFieldName, encryptedValidFrom } =
+  honeypot.getInputProps();
+---
+
+<div
+  id={`${nameFieldName}_wrap`}
+  style={{ display: "none" }}
+  aria-hidden="true"
+>
+  <label for={nameFieldName}>Please leave this field blank</label>
+  <input
+    id={nameFieldName}
+    name={nameFieldName}
+    type="text"
+    autocomplete="nope"
+    tabindex={-1}
+  />
+  {
+    validFromFieldName && encryptedValidFrom ? (
+      <>
+        <label for={validFromFieldName}>Please leave this field blank</label>
+        <input
+          id={validFromFieldName}
+          name={validFromFieldName}
+          type="text"
+          value={encryptedValidFrom}
+          readonly
+          autocomplete="off"
+          tabindex={-1}
+        />
+      </>
+    ) : null
+  }
+</div>
