@@ -54,17 +54,17 @@ import Label from "../components/Label.astro";
 
 <div>
   <Label for="name">Name</Label>
-  <Input type="text" name="name" id="name" placeholder="testing 123" />
+  <Input type="text" name="name" id="name" required />
 </div>
 
 <div>
   <Label for="email">Email</Label>
-  <Input type="email" name="email" id="email" />
+  <Input type="email" name="email" id="email" required />
 </div>
 
 <div>
   <Label for="message">Message</Label>
-  <Textarea name="message" id="message"></Textarea>
+  <Textarea name="message" id="message" required />
 </div>
 
 <div class="flex justify-end">
