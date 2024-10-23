@@ -2,13 +2,27 @@
 
 The website for Maine Go.
 
-## TODO:
-
-When we're ready to transfer the official domain, read [here](https://docs.astro.build/en/guides/deploy/github/#using-github-pages-with-a-custom-domain).
-
 ## Stack
 
 This site uses [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+
+## Email / Contact form
+
+The contact form is powered by [Postmark](https://postmarkapp.com/).
+
+Setting up a Postmark account takes some extra time because your account
+has to be approved by Postmark. If you really need to test sending emails,
+reach out to Aaron and he can hook you up with a temporary API key.
+
+Once you have an api key, create a `.env` file in the root of the project
+with the following variables:
+
+```
+POSTMARK_API_KEY=your-api-key
+CONTACT_FORM_RECIPIENT_EMAIL=your-email-address
+```
+
+Now sending emails should work.
 
 ## Astro info
 
