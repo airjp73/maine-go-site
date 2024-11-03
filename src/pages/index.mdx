@@ -49,6 +49,7 @@ import Input from "../components/Input.astro";
 import Textarea from "../components/Textarea.astro";
 import Button from "../components/Button.astro";
 import Label from "../components/Label.astro";
+import HoneypotInputs from "../components/HoneypotInputs.astro";
 
 <form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
 
@@ -66,6 +67,8 @@ import Label from "../components/Label.astro";
   <Label for="message">Message</Label>
   <Textarea name="message" id="message" required />
 </div>
+
+<HoneypotInputs />
 
 <div class="flex justify-end">
   <Button type="submit">Submit</Button>
