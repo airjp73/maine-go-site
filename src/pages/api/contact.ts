@@ -12,6 +12,41 @@ const dataSchema = zfd.formData({
   message: z.string().min(1),
 });
 
+const spamResponseSchema = z.object({ status: z.string() });
+const checkSpam = async (emailContent: string) => {
+  try {
+    const response = await fetch(
+      "https://spam.pinestatepixels.com/api/contact-form",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.PETTDEV_API_KEY}`,
+        },
+        body: JSON.stringify({
+          emailContent,
+          project: "maine-go-site",
+          websiteName: "Maine Go",
+          relevantTopics: [
+            "The board game of Go, also known as Weiqi or Baduk",
+            "A local Go club in Maine",
+            "Questions about upcoming events like tournaments or meetings",
+            "Questions about the Maine chapter of the American Go Association",
+            "Questions about how to play Go or about finding people to play with",
+          ],
+        }),
+      }
+    );
+    const data = await response.json();
+    const result = spamResponseSchema.parse(data);
+    return result.status === "accept";
+  } catch (error) {
+    // Don't currently have proper error tracking, so err on the side of allowing the email through.
+    console.error(error);
+    return "accept";
+  }
+};
+
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
   if (!isHoneypotValid(formData))
@@ -25,6 +60,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     throw new Error("Postmark isn't enabled in this environment.");
 
   const client = new postmark.ServerClient(apiKey);
+
+  const spamCheck = await checkSpam(data.message);
+
+  if (!spamCheck) {
+    // Don't tell spammers that they were detected as spam.
+    return redirect("/contact-thanks");
+  }
 
   await client.sendEmail({
     From: "contact@mainego.org",
