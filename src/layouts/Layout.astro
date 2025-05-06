@@ -20,6 +20,8 @@ interface Props {
    * Use this to add a header to the hero.
    */
   heroHeading?: string;
+
+  previewImage?: string;
 }
 
 import Prose from "../components/Prose.astro";
@@ -30,6 +32,8 @@ import "../tailwind.css";
 
 const { title, heroImage, heroHeading } =
   Astro.props.frontmatter ?? Astro.props;
+
+const previewImage = "/mango1.webp"
 ---
 
 <!doctype html>
@@ -44,6 +48,10 @@ const { title, heroImage, heroHeading } =
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={previewImage} />
   </head>
   <body class="h-full flex flex-col">
     <Header />
