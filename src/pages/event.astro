@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout heroImage="/header-image.webp"
+	heroHeading="Event"
+	title="Event"
+	description="Upcoming event of the Maine Go Club."
+	>
+	<div slot="extraHeads">
+      <script is:inline src="https://unpkg.com/ical.js/dist/ical.es5.min.cjs"></script>
+	    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
+	    Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
+	    or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
+      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>"
+	    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
+      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
+	    -->
+      <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>"
+	    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
+      <script is:inline src='/fullcalendar-6.1.18/packages/daygrid/index.global.min.js'></script>
+	    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
+        var calendarEl = document.getElementById('calendar');
+        var targetEvent = window.location.hash.substr(1);
+        var sourceURL = ['http://localhost:8080/', targetEvent].join('');
+
+        var buildNode = ((kind, extraClasses, children, text) => {
+          var node = document.createElement(kind);
+          node.className = "calendar";
+          extraClasses.forEach(c => node.classList.add(c));
+          children.forEach(c => node.appendChild(c));
+          if (text) {
+            node.appendChild(document.createTextNode(text));
+          }
+          return node;
+        });
+
+        var buildLink = ((url, extraClasses, text) => {
+          var node = document.createElement('a');
+          node.setAttribute('href', url);
+          node.className = "calendar";
+          extraClasses.forEach(c => node.classList.add(c));
+          node.appendChild(document.createTextNode(text));
+          return node;
+        });
+
+        var renderEvent = (e => {
+          console.log(e);
+          var eDiv = buildNode('p', [], [
+                       buildNode('h2', [], [], e.title),
+                       buildNode('div', ['event-time'], [
+                           buildNode('span', ['start-time'], [], e.start),
+                           buildNode('span', ['seperator'], [], '–'), // en-dash
+                           buildNode('span', ['end-time'], [], e.end),
+                         ], null),
+                       buildNode('div', ['location'], [], e.extendedProps.location),
+                       buildNode('div', ['status'], [], e.extendedProps.status),
+                       buildNode('div', ['description'], [], e.extendedProps.description),
+                       buildNode('div', ['references'], [ // There are images; we should use them. they're in "attachments".
+                           buildNode('div', ['reference'], [buildLink(sourceURL, ['ical'], '⇩.ics')], null)
+                         ], null),
+                      ], null);
+          calendarEl.appendChild(eDiv);
+        });
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          plugins: [],
+          events: {
+            url: sourceURL,
+            format: 'ics',
+          },
+          eventSourceSuccess: (events, _r) => events.forEach(e => renderEvent(e)), //all the work happens here
+        });
+        //calendar.render(); // we're just hijacking the parsing...
+	      });
+	    </script>
+	</div>
+
+	<div id='calendar'></div>
+</Layout>

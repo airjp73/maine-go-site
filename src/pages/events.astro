@@ -29,7 +29,7 @@ import Layout from '../layouts/Layout.astro';
 		    url: 'http://localhost:8080/',
 		    format: 'ics',
 		  },
-		  eventSourceSuccess: (events, _r) => events.forEach(e => e.url = ["/event/", e.extendedProps.uid].join('')),
+		  eventSourceSuccess: (events, _r) => events.forEach(e => e.url = ["/event#", e.extendedProps.uid].join('')),
 		});
 		calendar.render();
 	      });
