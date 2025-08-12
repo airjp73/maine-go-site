@@ -18,7 +18,7 @@ import Layout from '../layouts/Layout.astro';
 	    -->
       <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
 	    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
-      <script is:inline src='/fullcalendar-6.1.18/packages/daygrid/index.global.min.js'></script>
+      <script is:inline src='/fullcalendar-6.1.18/packages/list/index.global.min.js'></script>
 	    <script is:inline>
         document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
         var calendarEl = document.getElementById('calendar');
@@ -83,7 +83,8 @@ import Layout from '../layouts/Layout.astro';
         });
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
+	  initialView: 'list',
+	  duration: { years: 10 },
           plugins: [],
           events: {
             url: sourceURL,
