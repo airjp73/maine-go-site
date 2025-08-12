@@ -12,11 +12,11 @@ import Layout from '../layouts/Layout.astro';
 	    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
 	    Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
 	    or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
-      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>"
+      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>
 	    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
       <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
 	    -->
-      <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>"
+      <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
 	    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
       <script is:inline src='/fullcalendar-6.1.18/packages/daygrid/index.global.min.js'></script>
 	    <script is:inline>
@@ -62,9 +62,11 @@ import Layout from '../layouts/Layout.astro';
         var renderEvent = (e => {
 	  console.log(e);
 	  var linksEtc = [buildNode('div', ['reference'], [buildLink(sourceURL, ['ical'], '⇩.ics')], null)];
-	  e.extendedProps.attachments.forEach(a => a.forEach(inner =>
+	  e.extendedProps.attachments.forEach(a => {if (a.length) {
+	      a.forEach(inner =>
 		  linksEtc.unshift(buildImage(inner, "Image for event", 512, ["event-image"])) //this is bad, doesn't check if it's actually an image!
-	      ));
+		  )
+	  }});
           var eDiv = buildNode('p', [], [
                        buildNode('h2', [], [], e.title),
                        buildNode('div', ['event-time'], [
