@@ -33,6 +33,7 @@ const checkSpam = async (emailContent: string) => {
             "Questions about upcoming events like tournaments or meetings",
             "Questions about the Maine chapter of the American Go Association",
             "Questions about how to play Go or about finding people to play with",
+            "Very short formulaic messages like \"22833\", \"15kyu\", or \"1d\"",
           ],
         }),
       }

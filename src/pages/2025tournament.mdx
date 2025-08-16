@@ -50,9 +50,42 @@ We’ll have coffee & snacks in the morning; there are lots of good choices for 
 easy walking distance. Games will count toward AGA rankings.
 
 **How:**
+Please register in advance using the form below.
+
 Registration for existing AGA members is $10, payable by
 Venmo ([@Dyonn](https://account.venmo.com/u/Dyonn), phone ends in _-4753_),
 Paypal ([jonathan.green.dyonn@gmail.com](https://paypal.me/JonathanGreenGo))
-or when you check in that day. Please register in advance.
+or when you check in that day.
 
-# <del>Go here to register</del>
+import Input from "../components/Input.astro";
+import Textarea from "../components/Textarea.astro";
+import Button from "../components/Button.astro";
+import Label from "../components/Label.astro";
+import HoneypotInputs from "../components/HoneypotInputs.astro";
+
+<form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
+
+<div>
+  <Label for="name">Name</Label>
+  <Input type="text" name="name" id="name" required />
+</div>
+
+<div>
+  <Label for="email">Email</Label>
+  <Input type="email" name="email" id="email" required />
+</div>
+
+<div>
+  <Label for="message">AGA member number, or current rank</Label>
+  <Textarea name="message" id="message" required />
+        <br />
+        If you don't have your AGA member number today, bring it with you that day.
+</div>
+
+<HoneypotInputs />
+
+<div class="flex justify-end">
+  <Button type="submit">Submit</Button>
+</div>
+
+</form>
