@@ -19,28 +19,40 @@ Three rounds of games, AGA rules,
 20 minutes plus 20 seconds Fischer time.
 Everyone is eligible to play all rounds.
 
-<p style="padding-left: 2em;  padding-right: 3em;  line-height: 125%;">**Maine State Championship:** A knockout tournament for up to 8 of the highest ranked Maine residents. As players get knocked out, they join the Open tournament. The winner will be crowned Maine State Champion.</p>
+<p style="padding-left: 2em;  padding-right: 3em;  line-height: 125%;">
+  **Maine State Championship:** A knockout tournament for up to 8 of the highest
+  ranked Maine residents. As players get knocked out, they join the Open
+  tournament. The winner will be crowned Maine State Champion.
+</p>
 
-<p style="padding-left: 2em;  padding-right: 3em;  line-height: 125%;">**Maine Open:** A [McMahon tournament](https://senseis.xmp.net/?McMahonPairing) open to all AGA members. As much as possible, players will play even games against opponents of a similar rank. There will be a prize for the top player.</p>
+<p style="padding-left: 2em;  padding-right: 3em;  line-height: 125%;">
+  **Maine Open:** A [McMahon
+  tournament](https://senseis.xmp.net/?McMahonPairing) open to all AGA members.
+  As much as possible, players will play even games against opponents of a
+  similar rank. There will be a prize for the top player.
+</p>
 
 **Where:**
 
-<p style="line-height: 125%;">[Think Tank Coworking](https://www.thinktankcoworking.com/locations)</p>
-<p style="line-height: 125%;">[533 Congress St  
-Portland, ME 04101](https://www.openstreetmap.org/directions?to=43.655940%2C+-70.261436#map=19/43.655931/-70.261905)</p>
+<p style="line-height: 125%;">
+  [Think Tank Coworking](https://www.thinktankcoworking.com/locations)
+</p>
+<p style="line-height: 125%;">
+  [533 Congress St Portland, ME
+  04101](https://www.openstreetmap.org/directions?to=43.655940%2C+-70.261436#map=19/43.655931/-70.261905)
+</p>
 
 On street parking should be available in the proximity with no charge for city metered
 spaces (because it's Sunday).
 
-
 **When:**
-September 21st, 2025. Check-in will be from 9-9:45am; 
+September 21st, 2025. Check-in will be from 9-9:45am;
 first games will start at 10am. We’ll finish up by 6pm.
 
 **Why:**
-A chance to meet and challenge Go players in the region as well as to take part in 
+A chance to meet and challenge Go players in the region as well as to take part in
 the prestigious 50-State Championship.
-We’ll have coffee & snacks in the morning; there are lots of good choices for lunch in 
+We’ll have coffee & snacks in the morning; there are lots of good choices for lunch in
 easy walking distance. Games will count toward AGA rankings.
 
 **How:**
@@ -71,10 +83,12 @@ import HoneypotInputs from "../components/HoneypotInputs.astro";
 
 <div>
   <Label for="message">AGA member number, or current rank</Label>
-  <Textarea name="message" id="message" required />
-        <br />
-        If you don't have your AGA member number today, bring it with you that day.
+  <Input name="message" id="message" required maxlength={10} />
+  <br />
+  If you don't have your AGA member number today, bring it with you that day.
 </div>
+
+<input type="hidden" name="formName" value="tournament" />
 
 <HoneypotInputs />
 
