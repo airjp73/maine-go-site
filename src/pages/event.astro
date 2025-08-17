@@ -95,12 +95,23 @@ import Layout from '../layouts/Layout.astro';
             url: sourceURL,
             format: 'ics',
           },
-          eventSourceSuccess: (events, _r) => events.forEach(e => renderEvent(e)), //all the work happens here
+          eventSourceSuccess: (events, _r) => {//all the work happens here
+            events.forEach(e => renderEvent(e));
+            calendarEl.removeChild(calendarEl.firstChild);
+          },
+          eventSourceFailure : (err) => {
+            console.log(err);
+            var errorMessage = document.createElement('div');
+            errorMessage.innerText = err.message;
+            var loadingzone = document.getElementById('calendar')
+            loadingzone.innerText = "Something went wrong; please let us know about this!";
+            loadingzone.appendChild(errorMessage);
+          },
         });
         //calendar.render(); // we're just hijacking the parsing...
         });
       </script>
   </div>
 
-  <div id='calendar'></div>
+  <div id='calendar'><p>Loading (should take less than a minute, sorry)...</p></div>
 </Layout>
