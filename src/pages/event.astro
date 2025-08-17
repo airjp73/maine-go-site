@@ -66,16 +66,22 @@ import Layout from '../layouts/Layout.astro';
               linksEtc.unshift(buildImage(inner, "Image for event", 512, ["event-image"])) //this is bad, doesn't check if it's actually an image!
             )
           }});
-          var eDiv = buildNode('p', [], [
-                       buildNode('h2', [], [], e.title),
-                       buildNode('div', ['event-time'], [
-                           buildNode('span', ['start-time'], [], e.start),
-                           buildNode('span', ['seperator'], [], '–'), // en-dash
-                           buildNode('span', ['end-time'], [], e.end),
+          var status = e.extendedProps.status;
+          var statusdiv = ('CONFIRMED' == e.extendedProps.status)
+              ? buildNode('div', ['status', 'text-green-600', 'text-xs'], [], status)
+              : buildNode('div', ['status', 'text-red-600', 'text-lg'], [], status);
+          var endTime = e.end ? new Date(e.end).toLocaleString(undefined, { timeStyle: "long", dateStyle: "medium" }) : '';
+          var eDiv = buildNode('p', ['mb-20'], [
+                       buildNode('h2', ['mb-1'], [], e.title),
+                       statusdiv,
+                       buildNode('div', ['event-time', 'm-2'], [
+                           buildNode('span', ['start-time'], [], new Date(e.start).toLocaleString(undefined, { timeStyle: "long",
+                                                                                                               dateStyle: "medium" })),
+                           buildNode('span', ['seperator', 'px-2'], [], '–'), // en-dash
+                           buildNode('span', ['end-time'], [], endTime),
                          ], null),
-                       buildNode('div', ['location'], [], e.extendedProps.location),
-                       buildNode('div', ['status'], [], e.extendedProps.status),
-                       buildNode('div', ['description'], [], e.extendedProps.description),
+                       buildNode('div', ['location', 'text-lg', 'my-2'], [], e.extendedProps.location),
+                       buildNode('div', ['description', 'indent-4'], [], e.extendedProps.description),
                        buildNode('div', ['references'], linksEtc, null),
                      ], null);
           calendarEl.appendChild(eDiv);
