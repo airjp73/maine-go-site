@@ -3,31 +3,30 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout heroImage="/header-image.webp"
-	heroHeading="Event"
-	title="Event"
-	description="Upcoming event of the Maine Go Club."
-	>
-	<div slot="extraHeads">
-      <script is:inline src="https://unpkg.com/ical.js/dist/ical.es5.min.cjs"></script>
-	    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
-	    Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
-	    or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
-      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>
-	    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
-      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
-	    -->
-      <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
-	    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
-      <script is:inline src='/fullcalendar-6.1.18/packages/list/index.global.min.js'></script>
-	    <script is:inline>
-        document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
+        heroHeading="Event"
+        title="Event"
+        description="Upcoming event of the Maine Go Club.">
+  <div slot="extraHeads">
+    <script is:inline src="https://unpkg.com/ical.js/dist/ical.es5.min.cjs"></script>
+    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
+    Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
+    or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
+    -->
+    <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/list/index.global.min.js'></script>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
         var calendarEl = document.getElementById('calendar');
         var targetEvent = window.location.hash.substr(1);
         var sourceURL = ['https://service.irvingstreet.me:5655/1399433029964796045/', targetEvent, '.ics'].join(''); // or use .json here,
-	                                                                                                             // but the server as written is
-														     // doing some parsing we might miss.
-														     // And also the json representation
-														     // omits status and IDK what else.
+                                                                                                                     // but the server as written is
+                                                                                                                     // doing some parsing we might miss.
+                                                                                                                     // And also the json representation
+                                                                                                                     // omits status and IDK what else.
 
         var buildNode = ((kind, extraClasses, children, text) => {
           var node = document.createElement(kind);
@@ -49,24 +48,24 @@ import Layout from '../layouts/Layout.astro';
           return node;
         });
 
-	var buildImage = ((url, alt, width, extraClasses) => {
+        var buildImage = ((url, alt, width, extraClasses) => {
           var node = document.createElement('img');
-	  node.setAttribute('src', url);
-	  if (alt) {node.setAttribute('alt', alt);}
-	  if (width) {node.setAttribute('width', width);}
+          node.setAttribute('src', url);
+          if (alt) {node.setAttribute('alt', alt);}
+          if (width) {node.setAttribute('width', width);}
           node.className = "calendar";
           extraClasses.forEach(c => node.classList.add(c));
           return node;
         });
 
         var renderEvent = (e => {
-	  console.log(e);
-	  var linksEtc = [buildNode('div', ['reference'], [buildLink(sourceURL, ['ical'], '⇩.ics')], null)];
-	  e.extendedProps.attachments.forEach(a => {if (a.length) {
-	      a.forEach(inner =>
-		  linksEtc.unshift(buildImage(inner, "Image for event", 512, ["event-image"])) //this is bad, doesn't check if it's actually an image!
-		  )
-	  }});
+          console.log(e);
+          var linksEtc = [buildNode('div', ['reference'], [buildLink(sourceURL, ['ical'], '⇩.ics')], null)];
+          e.extendedProps.attachments.forEach(a => {if (a.length) {
+            a.forEach(inner =>
+              linksEtc.unshift(buildImage(inner, "Image for event", 512, ["event-image"])) //this is bad, doesn't check if it's actually an image!
+            )
+          }});
           var eDiv = buildNode('p', [], [
                        buildNode('h2', [], [], e.title),
                        buildNode('div', ['event-time'], [
@@ -78,13 +77,13 @@ import Layout from '../layouts/Layout.astro';
                        buildNode('div', ['status'], [], e.extendedProps.status),
                        buildNode('div', ['description'], [], e.extendedProps.description),
                        buildNode('div', ['references'], linksEtc, null),
-                      ], null);
+                     ], null);
           calendarEl.appendChild(eDiv);
         });
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-	  initialView: 'list',
-	  duration: { years: 10 },
+          initialView: 'list',
+          duration: { years: 10 },
           plugins: [],
           events: {
             url: sourceURL,
@@ -93,9 +92,9 @@ import Layout from '../layouts/Layout.astro';
           eventSourceSuccess: (events, _r) => events.forEach(e => renderEvent(e)), //all the work happens here
         });
         //calendar.render(); // we're just hijacking the parsing...
-	      });
-	    </script>
-	</div>
+        });
+      </script>
+  </div>
 
-	<div id='calendar'></div>
+  <div id='calendar'></div>
 </Layout>
