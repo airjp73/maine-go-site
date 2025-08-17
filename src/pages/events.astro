@@ -29,12 +29,14 @@ import Layout from '../layouts/Layout.astro';
 		    url: 'https://service.irvingstreet.me:5655/1399433029964796045.ics',
 		    format: 'ics',
 		  },
-		  eventSourceSuccess: (events, _r) => events.forEach(e => e.url = ["/event#", e.extendedProps.uid].join('')),
+      eventSourceSuccess: (events, _r) => events.forEach(e => e.url = ["/event#", e.extendedProps.uid].join('')),
+      height: "auto",
+      contentHeight: "auto",
 		});
 		calendar.render();
 	      });
 	    </script>
 	</div>
 
-	<div id='calendar'></div>
+  <div id='calendar', class="not-prose"></div>
 </Layout>
