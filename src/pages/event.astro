@@ -21,7 +21,7 @@ import Layout from '../layouts/Layout.astro';
       document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
         var calendarEl = document.getElementById('calendar');
         var targetEvent = window.location.hash.substr(1);
-        var sourceURL = ['https://service.irvingstreet.me:5655/1399433029964796045/', targetEvent, '.ics'].join(''); // or use .json here,
+        var sourceURL = ['https://service.irvingstreet.me:5655/690710231172513792/', targetEvent, '.ics'].join(''); // or use .json here,
                                                                                                                      // but the server as written is
                                                                                                                      // doing some parsing we might miss.
                                                                                                                      // And also the json representation
@@ -49,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
 
         var buildImage = ((url, alt, width, extraClasses) => {
           var node = document.createElement('img');
-          node.setAttribute('src', url);
+	  node.setAttribute('src', (width ? [url, width] : [url]).join('?size='));
           if (alt) {node.setAttribute('alt', alt);}
           if (width) {node.setAttribute('width', width);}
           node.className = "calendar";
