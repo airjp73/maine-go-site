@@ -10,6 +10,7 @@ const dataSchema = zfd.formData({
   name: z.string().min(1),
   email: z.string().email(),
   message: z.string().min(1),
+  formName: z.enum(["tournament", "contact"]),
 });
 
 const spamResponseSchema = z.object({ status: z.string() });
@@ -33,7 +34,6 @@ const checkSpam = async (emailContent: string) => {
             "Questions about upcoming events like tournaments or meetings",
             "Questions about the Maine chapter of the American Go Association",
             "Questions about how to play Go or about finding people to play with",
-            "Very short formulaic messages like \"22833\", \"15kyu\", or \"1d\"",
           ],
         }),
       }
@@ -48,12 +48,19 @@ const checkSpam = async (emailContent: string) => {
   }
 };
 
+const tournamentMessage =
+  "A new tournament registration has been submitted for the Maine Go state championship:\n\nAGA id or rank: ";
+
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
   if (!isHoneypotValid(formData))
     return new Response("Try again later", { status: 400 });
 
   const data = dataSchema.parse(formData);
+  const message =
+    data.formName === "tournament"
+      ? tournamentMessage + data.message
+      : data.message;
 
   const apiKey = import.meta.env.POSTMARK_API_KEY;
   const recipient = import.meta.env.CONTACT_FORM_RECIPIENT_EMAIL;
@@ -62,7 +69,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   const client = new postmark.ServerClient(apiKey);
 
-  const spamCheck = await checkSpam(data.message);
+  const spamCheck = await checkSpam(message);
 
   if (!spamCheck) {
     // Don't tell spammers that they were detected as spam.
@@ -77,7 +84,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       `Name: ${data.name}`,
       `Email: ${data.email}`,
       "",
-      `Message:\n${data.message}`,
+      `Message:\n${message}`,
     ].join("\n"),
     MessageStream: "outbound",
     ReplyTo: data.email,
