@@ -29,7 +29,8 @@ import Layout from '../layouts/Layout.astro';
           },
           eventSourceSuccess: (events, _r) => {
             events.forEach(e => e.url = ["/event#", e.extendedProps.uid].join(''));
-            document.getElementById('calendar-loading').remove();
+            var loadingzone = document.getElementById('calendar-loading');
+            if (loadingzone) {loadingzone.innerText = '';}
           },
           eventSourceFailure : (err) => {
             console.log(err);

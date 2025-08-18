@@ -49,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
 
         var buildImage = ((url, alt, width, extraClasses) => {
           var node = document.createElement('img');
-	  node.setAttribute('src', (width ? [url, width] : [url]).join('?size='));
+          node.setAttribute('src', (width ? [url, width] : [url]).join('?size='));
           if (alt) {node.setAttribute('alt', alt);}
           if (width) {node.setAttribute('width', width);}
           node.className = "calendar";
@@ -96,13 +96,14 @@ import Layout from '../layouts/Layout.astro';
           },
           eventSourceSuccess: (events, _r) => {//all the work happens here
             events.forEach(e => renderEvent(e));
-            calendarEl.removeChild(calendarEl.firstChild);
+            var loadingzone = document.getElementById('calendar-loading');
+            if (loadingzone) {loadingzone.innerText = '';}
           },
           eventSourceFailure : (err) => {
             console.log(err);
             var errorMessage = document.createElement('div');
             errorMessage.innerText = err.message;
-            var loadingzone = document.getElementById('calendar')
+            var loadingzone = document.getElementById('calendar-loading');
             loadingzone.innerText = "Something went wrong; please let us know about this!";
             loadingzone.appendChild(errorMessage);
           },
@@ -112,5 +113,5 @@ import Layout from '../layouts/Layout.astro';
       </script>
   </div>
 
-  <div id='calendar'><p>Loading (should take less than a minute, sorry)...</p></div>
+  <div id='calendar'><p id='calendar-loading'>Loading (should take less than a minute, sorry)...</p></div>
 </Layout>
