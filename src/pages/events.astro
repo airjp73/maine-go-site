@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout heroImage="/header-image.webp"
+        heroHeading="Events"
+        title="Events">
+  <div slot="extraHeads">
+    <script is:inline src="https://unpkg.com/ical.js/dist/ical.es5.min.cjs"></script>
+    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
+      Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
+      or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
+            <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>
+      <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
+            <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
+      -->
+    <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/daygrid/index.global.min.js'></script>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          plugins: [],
+          events: {
+            url: 'https://service.irvingstreet.me:5655/690710231172513792.ics',
+            format: 'ics',
+          },
+          eventSourceSuccess: (events, _r) => {
+            events.forEach(e => e.url = ["/event#", e.extendedProps.uid].join(''));
+            var loadingzone = document.getElementById('calendar-loading');
+            if (loadingzone) {loadingzone.innerText = '';}
+          },
+          eventSourceFailure : (err) => {
+            console.log(err);
+            var errorMessage = document.createElement('div');
+            errorMessage.innerText = err.message;
+            var loadingzone = document.getElementById('calendar-loading')
+            loadingzone.innerText = "Something went wrong; please let us know about this!";
+            loadingzone.appendChild(errorMessage);
+          },
+          height: "auto",
+          contentHeight: "auto",
+        });
+        calendar.render();
+      });
+    </script>
+  </div>
+
+  <div id='calendar-loading' class="text-xl">Loading (should take less than a minute, sorry)...</div>
+  <div id='calendar', class="not-prose"></div>
+</Layout>

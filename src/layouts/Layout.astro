@@ -22,6 +22,8 @@ interface Props {
   heroHeading?: string;
 
   previewImage?: string;
+
+  extraHeads?: string[];
 }
 
 import Prose from "../components/Prose.astro";
@@ -30,7 +32,7 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import "../tailwind.css";
 
-const { title, heroImage, heroHeading } =
+const { title, heroImage, heroHeading, extraHeads } =
   Astro.props.frontmatter ?? Astro.props;
 
 const previewImage = "/mango1.webp"
@@ -52,6 +54,7 @@ const previewImage = "/mango1.webp"
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
     <meta property="og:image" content={previewImage} />
+    <slot name="extraHeads"></slot>
   </head>
   <body class="h-full flex flex-col">
     <Header />

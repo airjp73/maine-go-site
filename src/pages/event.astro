@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout heroImage="/header-image.webp"
+        heroHeading="Event"
+        title="Event">
+  <div slot="extraHeads">
+    <script is:inline src="https://unpkg.com/ical.js/dist/ical.es5.min.cjs"></script>
+    <!-- We should certainly use these ones instead, but we need the patch to get event ids.
+    Look for merging of https://github.com/fullcalendar/fullcalendar/pull/7506
+    or other resolution of https://github.com/fullcalendar/fullcalendar/issues/7418
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.18/index.global.min.js'></script>
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.18/index.global.min.js'></script>
+    <script is:inline src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.18/index.global.min.js'></script>
+    -->
+    <script is:inline src='/fullcalendar-6.1.18/packages/core/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/icalendar/index.global.min.js'></script>
+    <script is:inline src='/fullcalendar-6.1.18/packages/list/index.global.min.js'></script>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {  // Using ical.js directly would be better, but more work for me.
+        var calendarEl = document.getElementById('calendar');
+        var targetEvent = window.location.hash.substr(1);
+        var sourceURL = ['https://service.irvingstreet.me:5655/690710231172513792/', targetEvent, '.ics'].join(''); // or use .json here,
+                                                                                                                     // but the server as written is
+                                                                                                                     // doing some parsing we might miss.
+                                                                                                                     // And also the json representation
+                                                                                                                     // omits status and IDK what else.
+
+        var buildNode = ((kind, extraClasses, children, text) => {
+          var node = document.createElement(kind);
+          node.className = "calendar";
+          extraClasses.forEach(c => node.classList.add(c));
+          children.forEach(c => node.appendChild(c));
+          if (text) {
+            node.appendChild(document.createTextNode(text));
+          }
+          return node;
+        });
+
+        var buildLink = ((url, extraClasses, text) => {
+          var node = document.createElement('a');
+          node.setAttribute('href', url);
+          node.className = "calendar";
+          extraClasses.forEach(c => node.classList.add(c));
+          node.appendChild(document.createTextNode(text));
+          return node;
+        });
+
+        var buildImage = ((url, alt, width, extraClasses) => {
+          var node = document.createElement('img');
+          node.setAttribute('src', (width ? [url, width] : [url]).join('?size='));
+          if (alt) {node.setAttribute('alt', alt);}
+          if (width) {node.setAttribute('width', width);}
+          node.className = "calendar";
+          extraClasses.forEach(c => node.classList.add(c));
+          return node;
+        });
+
+        var renderEvent = (e => {
+          console.log(e);
+          var linksEtc = [buildNode('div', ['reference'], [buildLink(sourceURL, ['ical'], '⇩.ics')], null)];
+          e.extendedProps.attachments.forEach(a => {if (a.length) {
+            a.forEach(inner =>
+              linksEtc.unshift(buildImage(inner, "Image for event", 512, ["event-image"])) //this is bad, doesn't check if it's actually an image!
+            )
+          }});
+          var status = e.extendedProps.status;
+          var statusdiv = ('CONFIRMED' == e.extendedProps.status)
+              ? buildNode('div', ['status', 'text-green-600', 'text-xs'], [], status)
+              : buildNode('div', ['status', 'text-red-600', 'text-lg'], [], status);
+          var endTime = e.end ? new Date(e.end).toLocaleString(undefined, { timeStyle: "long", dateStyle: "medium" }) : '';
+          var eDiv = buildNode('p', ['mb-20'], [
+                       buildNode('h2', ['mb-1'], [], e.title),
+                       statusdiv,
+                       buildNode('div', ['event-time', 'm-2'], [
+                           buildNode('span', ['start-time'], [], new Date(e.start).toLocaleString(undefined, { timeStyle: "long",
+                                                                                                               dateStyle: "medium" })),
+                           buildNode('span', ['seperator', 'px-2'], [], '–'), // en-dash
+                           buildNode('span', ['end-time'], [], endTime),
+                         ], null),
+                       buildNode('div', ['location', 'text-lg', 'my-2'], [], e.extendedProps.location),
+                       buildNode('div', ['description', 'indent-4'], [], e.extendedProps.description),
+                       buildNode('div', ['references'], linksEtc, null),
+                     ], null);
+          calendarEl.appendChild(eDiv);
+        });
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'list',
+          duration: { years: 10 },
+          plugins: [],
+          events: {
+            url: sourceURL,
+            format: 'ics',
+          },
+          eventSourceSuccess: (events, _r) => {//all the work happens here
+            events.forEach(e => renderEvent(e));
+            var loadingzone = document.getElementById('calendar-loading');
+            if (loadingzone) {loadingzone.innerText = '';}
+          },
+          eventSourceFailure : (err) => {
+            console.log(err);
+            var errorMessage = document.createElement('div');
+            errorMessage.innerText = err.message;
+            var loadingzone = document.getElementById('calendar-loading');
+            loadingzone.innerText = "Something went wrong; please let us know about this!";
+            loadingzone.appendChild(errorMessage);
+          },
+        });
+        //calendar.render(); // we're just hijacking the parsing...
+        });
+      </script>
+  </div>
+
+  <div id='calendar'><p id='calendar-loading'>Loading (should take less than a minute, sorry)...</p></div>
+</Layout>
