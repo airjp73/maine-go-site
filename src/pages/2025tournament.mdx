@@ -6,7 +6,7 @@ title: 2025 Maine State Championship and Open
 description: The third Maine State Go Championship and Open Tournament is on September 21st, 2025.
 ---
 
-### The third Maine State Championship and Open will be on Sunday September 21st, 2025, at Think Tank in Portland.
+### The third Maine State Championship and Open was Sunday September 21st, 2025, at Think Tank in Portland.
 
 **Who:**
 A tournament open to all members of the [AGA](https://www.usgo.org/)!
@@ -56,44 +56,13 @@ We’ll have coffee & snacks in the morning; there are lots of good choices for 
 easy walking distance. Games will count toward AGA rankings.
 
 **How:**
-Please register in advance using the form below.
+<del>Please register in advance using the form below.</del>
 
 Registration for existing AGA members is $10, payable by
 Venmo ([@Dyonn](https://account.venmo.com/u/Dyonn), phone ends in _-4753_),
 Paypal ([jonathan.green.dyonn@gmail.com](https://paypal.me/JonathanGreenGo))
 or when you check in that day.
 
-import Input from "../components/Input.astro";
-import Textarea from "../components/Textarea.astro";
-import Button from "../components/Button.astro";
-import Label from "../components/Label.astro";
-import HoneypotInputs from "../components/HoneypotInputs.astro";
+If you don't have your AGA member number today, bring it with you that day.
 
-<form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
-
-<div>
-  <Label for="name">Name</Label>
-  <Input type="text" name="name" id="name" required />
-</div>
-
-<div>
-  <Label for="email">Email</Label>
-  <Input type="email" name="email" id="email" required />
-</div>
-
-<div>
-  <Label for="message">AGA member number, or current rank</Label>
-  <Input name="message" id="message" required maxlength={10} />
-  <br />
-  If you don't have your AGA member number today, bring it with you that day.
-</div>
-
-<input type="hidden" name="formName" value="tournament" />
-
-<HoneypotInputs />
-
-<div class="flex justify-end">
-  <Button type="submit">Submit</Button>
-</div>
-
-</form>
+**Registration is closed**
