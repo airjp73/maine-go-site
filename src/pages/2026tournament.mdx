@@ -10,6 +10,7 @@ description: The fourth Maine State Go Championship and Open Tournament is on Au
 
 import { Image } from 'astro:assets';
 import Input from "../components/Input.astro";
+import RadioGroup from "../components/RadioGroup.astro"
 import Textarea from "../components/Textarea.astro";
 import Button from "../components/Button.astro";
 import Label from "../components/Label.astro";
@@ -65,7 +66,6 @@ Venmo ([@Dyonn](https://account.venmo.com/u/Dyonn), phone ends in _-4753_),
 Paypal ([jonathan.green.dyonn@gmail.com](https://paypal.me/JonathanGreenGo))
 or when you check in that day.
 
-If you don't have your AGA member number today, bring it with you that day.
 
 <form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
 
@@ -80,9 +80,19 @@ If you don't have your AGA member number today, bring it with you that day.
 </div>
 
 <div>
+  <RadioGroup name="mainer"
+    legend="Do you live in Maine?"
+    options={[
+      { value: "Mainer", label: "Yes" },
+      { value: "Out-of-state", label: "No" },
+    ]}
+    required
+  />
+</div>
+
+<div>
   <Label for="message">AGA member number, or current rank</Label>
   <Input name="message" id="message" required maxlength={20} />
-  <br />
   If you don't have your AGA member number today, bring it with you that day.
 </div>
 
