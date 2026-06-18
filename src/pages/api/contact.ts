@@ -10,6 +10,7 @@ const dataSchema = zfd.formData({
   name: z.string().min(1),
   email: z.string().email(),
   message: z.string().min(1),
+  mainer: z.string().optional(),
   formName: z.enum(["tournament", "contact"]),
 });
 
@@ -85,6 +86,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       `Email: ${data.email}`,
       "",
       `Message:\n${message}`,
+      `\nResidence\n${data.mainer}`,
     ].join("\n"),
     MessageStream: "outbound",
     ReplyTo: data.email,
