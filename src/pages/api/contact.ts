@@ -11,6 +11,7 @@ const dataSchema = zfd.formData({
   email: z.string().email(),
   message: z.string().min(1),
   mainer: z.string().optional(),
+  nameOfGame: z.string(),
   formName: z.enum(["tournament", "contact"]),
 });
 
@@ -58,6 +59,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response("Try again later", { status: 400 });
 
   const data = dataSchema.parse(formData);
+  if (data.nameOfGame.toLocaleLowerCase() !== "go") {
+    // Don't tell spammers that they were detected as spam.
+    return redirect("/contact-thanks");
+  }
+
   const message =
     data.formName === "tournament"
       ? tournamentMessage + data.message
