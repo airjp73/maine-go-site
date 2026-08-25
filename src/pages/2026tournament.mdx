@@ -1,12 +1,12 @@
 ---
 layout: ../layouts/Layout.astro
-heroImage: /tournament2025gamesMos.webp
+heroImage: /tournament2026group.webp
 heroHeading: 2026 Maine State Championship and Open
 title: 2026 Maine State Championship and Open
-description: The fourth Maine State Go Championship and Open Tournament is on August 23rd, 2026.
+description: The fourth Maine State Go Championship and Open Tournament was on August 23rd, 2026.
 ---
 
-### The fourth Maine State Go Championship and Open is on August 23rd, 2026, at Think Tank in Portland.
+### The fourth Maine State Go Championship and Open was on August 23rd, 2026, at Think Tank in Portland.
 
 import { Image } from 'astro:assets';
 import Input from "../components/Input.astro";
@@ -17,13 +17,44 @@ import Label from "../components/Label.astro";
 import HoneypotInputs from "../components/HoneypotInputs.astro";
 
 
+The Maine Go Club held its fourth State Championship August 23rd.
+Ten players from across the state competed for the title.
+Aaron Pettengil played as white against Glen Gallik in the final and became state champion for the second time.
+
+<Image
+  src="/logo_square_8.3.png"
+  alt="Guo Juan’s Internet Go School"
+  layout="constrained"
+  style="float:right; margin-top:0em"
+  width="110"
+  height="110"
+/>
+
+[Internet Go School](https://internetgoschool.com/landing),
+[OGS](https://online-go.com/),
+[American Yunguseng Dojang](https://ayd.yunguseng.com/) and others contributed prizes.
+
+<Image
+  src="/tournament2026board.webp"
+  alt="Aaron Pettengil (white) vs Glen Gallik (black)."
+  layout="full-width"
+  width={3342}
+  height={2469}
+/>
+
 **Who:**
 A tournament open to all members of the [AGA](https://www.usgo.org/)!
 Joining the AGA typically costs $30; if you're joining as a Maine resident, contact us to get a discount code.
 The tournament is free for new AGA members.  
 (All attendees will be credited **50% off** registration for the [New England Open](https://wmgc.massgo.org/ne-open-2026/), Sept 4-6!)
 
-The top performing Maine resident will be the new Maine State Champion.
+<Image
+  src="/tournament2026room.webp"
+  alt="Round two of the tournament."
+  layout="full-width"
+  width={3342}
+  height={2469}
+/>
 
 **What:**
 Three rounds of games, AGA rules,
@@ -36,6 +67,14 @@ The winner will be crowned Maine State Champion.
 **Maine Open:**
 A [McMahon tournament](https://senseis.xmp.net/?McMahonPairing) open to all AGA members.
 As much as possible, players will play even games against opponents of a similar rank.
+
+<Image
+  src="/tournament2026aaron.webp"
+  alt="The 2026 Maine State Champion."
+  layout="full-width"
+  width={3342}
+  height={2469}
+/>
 
 **Where:**
 
@@ -51,8 +90,7 @@ On street parking should be available in the proximity with no charge for city m
 spaces (because it's Sunday).
 
 **When:**
-August 23rd, 2026. Check-in will be from 9-9:45am;
-first games will start at 10am. We’ll finish up by 6pm.
+August 23rd, 2026.
 
 **Why:**
 A chance to meet and challenge Go players in the region as well as to take part in
@@ -61,54 +99,5 @@ We’ll have coffee & snacks in the morning; there are several of good choices f
 easy walking distance. Games will count toward AGA rankings.
 
 **How:**
-Please register in advance using the form below.
+<del>Please register in advance using the form below.</del>
 
-Registration for existing AGA members is $10, payable by
-Venmo ([@Dyonn](https://account.venmo.com/u/Dyonn), phone ends in _-4753_),
-Paypal ([jonathan.green.dyonn@gmail.com](https://paypal.me/JonathanGreenGo))
-or when you check in that day.
-
-
-<form method="post" action="/api/contact" encType="application/x-www-form-urlencoded" class="not-prose space-y-4">
-
-<div>
-  <Label for="name">Name</Label>
-  <Input type="text" name="name" id="name" required />
-</div>
-
-<div>
-  <Label for="email">Email</Label>
-  <Input type="email" name="email" id="email" required />
-</div>
-
-<div>
-  <Label for="nameOfGame">What's the two-letter name of this game?</Label>
-  <Input name="nameOfGame" id="nameOfGame" required />
-</div>
-
-<div>
-  <RadioGroup name="mainer"
-    legend="Do you live in Maine?"
-    options={[
-      { value: "Mainer", label: "Yes" },
-      { value: "Out-of-state", label: "No" },
-    ]}
-    required
-  />
-</div>
-
-<div>
-  <Label for="message">AGA member number, or current rank</Label>
-  <Input name="message" id="message" required maxlength={20} />
-  If you don't have your AGA member number today, bring it with you that day.
-</div>
-
-<input type="hidden" name="formName" value="tournament" />
-
-<HoneypotInputs />
-
-<div class="flex justify-end">
-  <Button type="submit">Submit</Button>
-</div>
-
-</form>
